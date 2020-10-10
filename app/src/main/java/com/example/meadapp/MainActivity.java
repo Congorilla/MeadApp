@@ -8,8 +8,8 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Vibrator;
+import android.view.View;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private String[] dice1_numbers;
     private String[] dice2_numbers;
     private String[] dice3_numbers;
+    private int cooldown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +39,22 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         dice1_numbers = new String[]{"0","1","2","3","4","5"};
         dice2_numbers = new String[]{"0","0","1","2","3","4"};
         dice3_numbers = new String[]{"10","20","20","30","30","30"};
+        cooldown = 0;
     }
 
     public void rollDice(){
-
         long[] vibpattern = {300,500};
         vibrator.vibrate(vibpattern,-1);
         dice1_num.setText(dice1_numbers[(int)(Math.random()*7)]);
         dice2_num.setText(dice2_numbers[(int)(Math.random()*7)]);
         dice3_num.setText(dice3_numbers[(int)(Math.random()*7)]);
+    }
+
+    public void reset(View v){
+        cooldown = 0;
+        dice1_num.setText("0");
+        dice2_num.setText("0");
+        dice3_num.setText("10");
     }
 
     @Override public void onAccuracyChanged(Sensor sensor, int accuracy){
@@ -57,8 +65,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         float x = event.values[0];
         float y = event.values[1];
         float z = event.values[2];
-        if(Math.abs(x)>15||Math.abs(y)>15||Math.abs(z)>15)
+        if((Math.abs(x)>15||Math.abs(y)>15||Math.abs(z)>15) && cooldown == 0) {
+            cooldown = 1;
             rollDice();
+        }
     }
 
     @Override protected void onResume(){
