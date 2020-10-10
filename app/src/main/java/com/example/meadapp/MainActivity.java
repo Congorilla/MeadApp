@@ -8,6 +8,8 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -16,6 +18,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
     private SensorManager sensorman;
+    private Vibrator vibrator;
+    private CountDownTimer cdtimer;
     private TextView dice1_num;
     private TextView dice2_num;
     private TextView dice3_num;
@@ -28,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sensorman = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
+        vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
         dice1_num = (TextView)findViewById(R.id.dice1_number);
         dice2_num = (TextView)findViewById(R.id.dice2_number);
         dice3_num = (TextView)findViewById(R.id.dice3_number);
@@ -37,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void rollDice(){
+        long[] vibpattern = {300,500};
+        vibrator.vibrate(vibpattern,-1);
         dice1_num.setText(dice1_numbers[(int)(Math.random()*7)]);
         dice2_num.setText(dice2_numbers[(int)(Math.random()*7)]);
         dice3_num.setText(dice3_numbers[(int)(Math.random()*7)]);
