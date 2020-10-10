@@ -19,7 +19,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
     private SensorManager sensorman;
     private Vibrator vibrator;
-    private CountDownTimer cdtimer;
     private TextView dice1_num;
     private TextView dice2_num;
     private TextView dice3_num;
@@ -42,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void rollDice(){
+
         long[] vibpattern = {300,500};
         vibrator.vibrate(vibpattern,-1);
         dice1_num.setText(dice1_numbers[(int)(Math.random()*7)]);
