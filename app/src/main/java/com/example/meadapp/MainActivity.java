@@ -45,9 +45,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void rollDice(){
         long[] vibpattern = {300,500};
         vibrator.vibrate(vibpattern,-1);
-        dice1_num.setText(dice1_numbers[(int)(Math.random()*7)]);
-        dice2_num.setText(dice2_numbers[(int)(Math.random()*7)]);
-        dice3_num.setText(dice3_numbers[(int)(Math.random()*7)]);
+        dice1_num.setText(dice1_numbers[(int)(Math.random()*6)]);
+        dice2_num.setText(dice2_numbers[(int)(Math.random()*6)]);
+        dice3_num.setText(dice3_numbers[(int)(Math.random()*6)]);
     }
 
     public void reset(View v){
